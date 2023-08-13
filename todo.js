@@ -4,12 +4,15 @@ window.addEventListener('load', () => {
 	const newTodoForm = document.querySelector('#new-todo-form');
 
 	const username = localStorage.getItem('username') || '';
+	
 
 	nameInput.value = username;
 
 	nameInput.addEventListener('change', (e) => {
 		localStorage.setItem('username', e.target.value);
 	})
+	
+	
 
 	newTodoForm.addEventListener('submit', e => {
 		e.preventDefault();
@@ -109,6 +112,8 @@ function DisplayTodos () {
 		})
 
 		deleteButton.addEventListener('click', (e) => {
+			var snd = new Audio('wrong-answer-129254.mp3')
+			snd.play()
 			todos = todos.filter(t => t != todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
 			DisplayTodos()
@@ -116,3 +121,20 @@ function DisplayTodos () {
 
 	})
 }
+function updateTime() {
+	const now = new Date();
+	
+	const timeElement = document.getElementById('time');
+	timeElement.textContent = now.toLocaleTimeString();
+  
+	const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	const dayElement = document.getElementById('day');
+	dayElement.textContent = days[now.getDay()];
+  
+	const options = { year: 'numeric', month: 'long', day: 'numeric' };
+	const dateElement = document.getElementById('date');
+	dateElement.textContent = now.toLocaleDateString(undefined, options);
+  }
+  
+  updateTime();
+  setInterval(updateTime, 1000); 
